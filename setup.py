@@ -4,7 +4,7 @@ module1 = Extension('hello',
                     sources=['hellomodule.c'])
 
 setup(
-    name='hellomodule',
+    name='hello',
     version='1.0',
     ext_modules = [module1],
 )
