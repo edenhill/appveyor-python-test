@@ -2,7 +2,8 @@ language: python
 
 env:
  global:
-  - CIBW_SKIP: "cp27-* cp35-* cp36-* cp37-*"
+  - CIBW_SKIP: "cp27-* cp35-* cp36-* cp37-* pp*"
+    CIBW_BUILD_VERBOSITY: 3
 
 jobs:
   include:
@@ -22,6 +23,7 @@ jobs:
 
 install:
   - python3 -m pip install cibuildwheel==1.7.4
+  - set
 
 script:
   # build the wheels, put them into './wheelhouse'
