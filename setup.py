@@ -1,11 +1,18 @@
 from distutils.core import setup, Extension
-from os import environ
+import os
+
+libs = []
+
+if os.name == 'nt':
+    libs.append('librdkafka')
+else:
+    libs.append('rdkafka')
 
 module1 = Extension('hello',
                     sources=['hellomodule.c'],
-                    include_dirs=environ.get('INCLUDE_DIRS', '').split(','),
-                    library_dirs=environ.get('LIB_DIRS', '').split(','),
-                    libraries=['rdkafka'])
+                    include_dirs=os.environ.get('INCLUDE_DIRS', '').split(','),
+                    library_dirs=os.environ.get('LIB_DIRS', '').split(','),
+                    libraries=libs)
 
 setup(
     name='hello',
