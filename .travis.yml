@@ -4,7 +4,7 @@ env:
  global:
   - CIBW_SKIP: "cp27-* cp35-* cp36-* cp37-* pp*"
     CIBW_BUILD_VERBOSITY: 3
-    CIBW_BEFORE_BUILD: bash prep-deps.sh
+    CIBW_BEFORE_BUILD: "bash prep-deps.sh"
 
 jobs:
   include:

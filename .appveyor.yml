@@ -1,6 +1,6 @@
 environment:
   global:
-    CIBW_SKIP: "cp27-* cp35-* cp36-* cp37-* pp*"
+    CIBW_SKIP: "cp27-* cp35-* cp36-* pp*"
     CIBW_BUILD_VERBOSITY: 3
   matrix:
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
