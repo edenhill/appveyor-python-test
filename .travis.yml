@@ -5,8 +5,8 @@ env:
   - CIBW_SKIP: "cp27-* cp35-* cp36-* cp37-* pp*"
     CIBW_BUILD_VERBOSITY: 3
     CIBW_BEFORE_BUILD: ". prep-deps.sh"
-    INCLUDE_DIRS: "c/inst/build/native/include"
-    LIB_DIRS: "c/inst/build/native/lib/win/x64/win-x64-Release/v120,c/inst/runtimes/win-x64/native"
+    INCLUDE_DIRS: "/c/inst/build/native/include"
+    LIB_DIRS: "/c/inst/build/native/lib/win/x64/win-x64-Release/v120,/c/inst/runtimes/win-x64/native"
 
 jobs:
   include:
@@ -25,7 +25,7 @@ jobs:
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
 
 install:
-  - . install-librdkafka.sh c/inst/
+  - . install-librdkafka.sh /c/inst/
   - python3 -m pip install cibuildwheel==1.7.4
   - set
 
