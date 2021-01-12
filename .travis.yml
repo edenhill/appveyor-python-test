@@ -1,5 +1,9 @@
 language: python
 
+env:
+ global:
+  - CIBW_SKIP: "cp27-*"
+
 jobs:
   include:
     # perform a linux build
