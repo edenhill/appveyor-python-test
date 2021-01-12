@@ -4,14 +4,15 @@ env:
  global:
   - CIBW_SKIP: "cp27-* cp35-* cp36-* cp37-* pp*"
     CIBW_BUILD_VERBOSITY: 3
+    CIBW_BEFORE_BUILD: bash prep-deps.sh
 
 jobs:
   include:
-    # perform a linux build
-    - services: docker
-    # and a mac build
-    - os: osx
-      language: shell
+#    # perform a linux build
+#    - services: docker
+#    # and a mac build
+#    - os: osx
+#      language: shell
     # and a windows build
     - os: windows
       language: shell
