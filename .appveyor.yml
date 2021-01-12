@@ -21,6 +21,8 @@ install: python -m pip install cibuildwheel==1.7.4
 build_script: python -m cibuildwheel --output-dir wheelhouse
 
 test_script:
+  - dir
+  - dir wheelhouse
   - python -m pip install -f wheelhouse/ hello
   - python sample.py
 
