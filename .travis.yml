@@ -2,11 +2,11 @@ language: python
 
 env:
  global:
-  - CIBW_SKIP: "cp27-*\\\ cp35-*\\\ cp36-*\\\ cp37-*\\\ pp*"
-    CIBW_BUILD_VERBOSITY: 3
-    CIBW_BEFORE_BUILD: "bash\\\ prep-deps.sh"
-    INCLUDE_DIRS: "/c/inst/build/native/include"
-    LIB_DIRS: "/c/inst/build/native/lib/win/x64/win-x64-Release/v120,/c/inst/runtimes/win-x64/native"
+  - CIBW_SKIP="cp27-* cp35-* cp36-* cp37-* pp*"
+  - CIBW_BUILD_VERBOSITY=3
+  - CIBW_BEFORE_BUILD="bash prep-deps.sh"
+  - INCLUDE_DIRS="/c/inst/build/native/include"
+  - LIB_DIRS="/c/inst/build/native/lib/win/x64/win-x64-Release/v120,/c/inst/runtimes/win-x64/native"
 
 jobs:
   include:
