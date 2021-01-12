@@ -1,6 +1,7 @@
 environment:
   global:
-    CIBW_SKIP: "cp27-*"
+    CIBW_SKIP: "cp27-* cp35-* cp36-* cp37-*"
+    CIBW_BUILD_VERBOSITY: 3
   matrix:
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu
       APPVEYOR_JOB_NAME: "python37-x64-ubuntu"
@@ -17,6 +18,10 @@ init:
 install: python -m pip install cibuildwheel==1.7.4
 
 build_script: python -m cibuildwheel --output-dir wheelhouse
+
+test_script:
+  - python3 -m pip install -i wheelhouse/ hello
+  - python3 sample.py
 
 artifacts:
   - path: "wheelhouse\\*.whl"
