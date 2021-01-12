@@ -5,6 +5,8 @@ env:
   - CIBW_SKIP: "cp27-* cp35-* cp36-* cp37-* pp*"
     CIBW_BUILD_VERBOSITY: 3
     CIBW_BEFORE_BUILD: "prep-deps.sh"
+    INCLUDE_DIRS: "c:\\inst\include"
+    LIB_DIRS: "c:\\inst\lib"
 
 jobs:
   include:

@@ -1,5 +1,6 @@
 #include <Python.h>
 
+#include <librdkafka/rdkafka.h>
 /*
  * Module method definition.
  * This is the code that will be invoked by `hello.say_hello`.
@@ -12,6 +13,7 @@ static PyObject* say_hello(PyObject* self, PyObject* args)
         return NULL;
 
     printf("Hello %s!\n", name);
+    printf("On librdkafka version %s\n", rd_kafka_version_str());
 
     Py_RETURN_NONE;
 }
