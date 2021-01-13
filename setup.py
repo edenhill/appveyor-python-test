@@ -17,7 +17,7 @@ module1 = Extension('chello',
 setup(
     name='hello',
     version='1.0',
-    packages=['bye'],
+    packages=['hello'],
     ext_modules = [module1],
 )
 

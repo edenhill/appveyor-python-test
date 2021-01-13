@@ -1,6 +1,6 @@
-from hello import chello
+import chello
 
-class Bye(object):
+class Hello(object):
 	def __init__(self):
 		self._chello = _chello()
 	def say_hello(self, name):
