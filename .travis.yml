@@ -9,7 +9,7 @@ jobs:
         - CIBW_BUILD="cp27-win32 cp38-win32"
         - xCIBW_BUILD="cp27-win32 cp36-win32 cp37-win32 cp38-win32 cp39-win32"
         - CIBW_BEFORE_BUILD="pip install delvewheel"
-        - xCIBW_TEST_COMMAND="bash {project}/test.sh {project} {package}"
+        - CIBW_TEST_COMMAND="python {project}/sample.py"
         - CIBW_BUILD_VERBOSITY=3
         - INCLUDE_DIRS="c:\\inst\\build\\native\\include"
         - DLL_DIR="c:\\inst\\runtimes\\win-x86\\native"
