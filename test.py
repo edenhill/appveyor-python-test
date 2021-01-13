@@ -16,5 +16,4 @@ print("Successfully imported:")
 print(hello.__name__, hello.__doc__)
 print(dir(hello))
 
-h = hello.Hello()
-h.say_hello("Magnus")
+hello.Hello.say_hello("Magnus")
