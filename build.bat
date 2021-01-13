@@ -3,7 +3,7 @@ SETLOCAL ENABLEEXTENSIONS
 set CIBW_BUILD=cp39-win_amd64
 set CIBW_SKIP=cp27-*
 set CIBW_BEFORE_BUILD=python -m pip install delvewheel==0.0.6
-set CIBW_TEST_COMMAND={project}/test.bat {project}
+set CIBW_TEST_COMMAND={project}\test.bat {project}
 set CIBW_BUILD_VERBOSITY=3
 set INCLUDE_DIRS=%cd%\inst\build\native\include
 set DLL_DIR=%cd%\inst\runtimes\win-x64\native
