@@ -4,6 +4,11 @@ set -ex
 
 DEST="$1"
 
+if [[ -f $DEST/build/native/include/librdkafka/rdkafka.h ]]; then
+    echo "Already installed in $DEST"
+    exit 0
+fi
+
 mkdir -p "$DEST"
 cd "$DEST"
 
