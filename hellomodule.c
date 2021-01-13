@@ -35,15 +35,15 @@ static PyMethodDef HelloMethods[] =
 
 PyMODINIT_FUNC
 #if PY_MAJOR_VERSION >= 3
-PyInit_hello(void)
+PyInit_chello(void)
 #else
-inithello(void)
+initchello(void)
 #endif
 {
 #if PY_MAJOR_VERSION >= 3
   static struct PyModuleDef moduledef = {
         PyModuleDef_HEAD_INIT,
-        "_hello",     /* m_name */
+        "chello",     /* m_name */
         "This is a Py3 module",  /* m_doc */
         -1,                  /* m_size */
         HelloMethods,    /* m_methods */
@@ -54,6 +54,6 @@ inithello(void)
     };
   return PyModule_Create(&moduledef);
 #else
-  Py_InitModule3("_hello", HelloMethods, "This is a Py2 module");
+  Py_InitModule3("chello", HelloMethods, "This is a Py2 module");
 #endif
 }
