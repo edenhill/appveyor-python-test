@@ -8,7 +8,7 @@ if os.name == 'nt':
 else:
     libs.append('rdkafka')
 
-module1 = Extension('hello',
+module1 = Extension('_hello',
                     sources=['hellomodule.c'],
                     include_dirs=os.environ.get('INCLUDE_DIRS', '').split(','),
                     library_dirs=os.environ.get('LIB_DIRS', '').split(','),
@@ -17,6 +17,7 @@ module1 = Extension('hello',
 setup(
     name='hello',
     version='1.0',
+    packages=['bye'],
     ext_modules = [module1],
 )
 
