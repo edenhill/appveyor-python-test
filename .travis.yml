@@ -6,8 +6,9 @@ jobs:
       os: windows
       language: shell
       env:
-        - CIBW_BUILD="cp27-win32 cp36-win32 cp37-win32 cp38-win32 cp39-win32"
-        - CIBW_TEST_COMMAND="{project}/test.sh {project} {package}"
+        - CIBW_BUILD="cp27-win32 cp38-win32"
+        - xCIBW_BUILD="cp27-win32 cp36-win32 cp37-win32 cp38-win32 cp39-win32"
+        - CIBW_TEST_COMMAND="bash {project}/test.sh {project} {package}"
         - CIBW_BUILD_VERBOSITY=3
         - INCLUDE_DIRS="c:\\inst\\build\\native\\include"
         - LIB_DIRS="c:\\inst\\build\\native\\lib\\win\\x86\\win-x86-Release\\v120"
@@ -20,6 +21,7 @@ jobs:
         - bash install-librdkafka.sh /c/inst/
         - python3 -m pip install cibuildwheel==1.7.4
         - set
+        - for f in wheelhouse/*whl ; do echo $f ; unzip -l $f ; done
 
 #    # perform a linux build
 #    - services: docker
