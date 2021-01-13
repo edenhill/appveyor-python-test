@@ -14,7 +14,7 @@ jobs:
         - INCLUDE_DIRS="c:\\inst\\build\\native\\include"
         - DLL_DIR="c:\\inst\\runtimes\\win-x86\\native"
         - LIB_DIRS="c:\\inst\\build\\native\\lib\\win\\x86\\win-x86-Release\\v120"
-        - CIBW_REPAIR_WHEEL_COMMAND="delvewheel repair --add-path c:\\inst\\runtimes\\win-x86\\native"
+        - CIBW_REPAIR_WHEEL_COMMAND="delvewheel repair --add-path c:\\inst\\runtimes\\win-x86\\native -w {dest_dir} {wheel}"
       before_install:
         - choco install python --version 3.8.0
         - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
