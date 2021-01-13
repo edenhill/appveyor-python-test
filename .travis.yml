@@ -21,7 +21,6 @@ jobs:
         - bash install-librdkafka.sh /c/inst/
         - python3 -m pip install cibuildwheel==1.7.4
         - set
-        - for f in wheelhouse/*whl ; do echo $f ; unzip -l $f ; done
 
 #    # perform a linux build
 #    - services: docker
@@ -33,3 +32,4 @@ script:
   # build the wheels, put them into './wheelhouse'
   - python3 -m cibuildwheel --output-dir wheelhouse
   - dir wheelhouse
+  - for f in wheelhouse/*whl ; do echo $f ; unzip -l $f ; done
