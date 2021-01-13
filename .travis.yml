@@ -7,7 +7,7 @@ jobs:
       language: shell
       env:
         - CIBW_BUILD="cp27-win32 cp36-win32 cp37-win32 cp38-win32 cp39-win32"
-        - CIBW_TEST_COMMAND="python {project}/sample.py"
+        - CIBW_TEST_COMMAND="{project}/test.sh {project} {package}"
         - CIBW_BUILD_VERBOSITY=3
         - INCLUDE_DIRS="c:\\inst\\build\\native\\include"
         - LIB_DIRS="c:\\inst\\build\\native\\lib\\win\\x86\\win-x86-Release\\v120"
