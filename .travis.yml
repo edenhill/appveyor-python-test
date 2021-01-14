@@ -3,31 +3,41 @@ language: python
 global:
  env:
   - LIBRDKAFKA_VERSION=v1.6.0-RC1
+  - CIBW_TEST_COMMAND="python {project}\test.py"
 
 jobs:
   include:
     - name: "Windows x86"
       os: windows
       language: shell
-      env:
-         - ARCH=x86
-         - BW_ARCH=win32
       before_install:
         - choco install python --version 3.8.0
         - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
         # make sure it's on PATH as 'python3'
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+      script:
+        - ./build.bat x86 win32 wheelhouse
     - name: "Windows x64"
       os: windows
       language: shell
-      env:
-         - ARCH=x64
-         - BW_ARCH=win_amd64
       before_install:
         - choco install python --version 3.8.0
         - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
         # make sure it's on PATH as 'python3'
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+      script:
+        - ./build.bat x64 win_amd64 wheelhouse
+    - name: "Linux"
+      services: docker
+      install: python3 -m pip install cibuildwheel==1.7.4
+      script: python3 -m cibuildwheel --output-dir wheelhouse
+    - name: "MacOSX"
+      os: osx
+      language: shell
+      services: docker
+      install: python3 -m pip install cibuildwheel==1.7.4
+      script: python3 -m cibuildwheel --output-dir wheelhouse
+
 
 #    # perform a linux build
 #    - services: docker
@@ -35,9 +45,6 @@ jobs:
 #    - os: osx
 #      language: shell
 
-script:
-  # build the wheels, put them into './wheelhouse'
-  - ./build.bat ${ARCH} ${BW_ARCH}
+after_script:
   - dir wheelhouse
   - for f in wheelhouse/*whl ; do echo $f ; unzip -l $f ; done
-  - echo Done
