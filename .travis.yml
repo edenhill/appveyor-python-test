@@ -6,6 +6,7 @@ global:
   - CIBW_TEST_COMMAND="python {project}\test.py"
 
 jobs:
+  # note: cibuildwheel does not support cp27-win* on Travis
   include:
     - name: "Windows x86"
       os: windows
@@ -28,11 +29,13 @@ jobs:
       script:
         - ./build.bat x64 win_amd64 wheelhouse
     - name: "Linux"
+      env: CIBW_SKIP="cp27-* pp*"
       services: docker
       install: python3 -m pip install cibuildwheel==1.7.4
       script: python3 -m cibuildwheel --output-dir wheelhouse
     - name: "MacOSX"
       os: osx
+      env: CIBW_SKIP="cp27-* pp*"
       language: shell
       services: docker
       install: python3 -m pip install cibuildwheel==1.7.4
