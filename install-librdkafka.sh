@@ -15,5 +15,3 @@ cd "$DEST"
 curl -L -o lrk.zip https://www.nuget.org/api/v2/package/librdkafka.redist/${LIBRDKAFKA_VERSION}
 
 unzip lrk.zip
-
-dir
