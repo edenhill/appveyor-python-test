@@ -19,3 +19,8 @@ unzip lrk.zip
 # Copy the librdkafka build with least dependencies to librdkafka.so
 cp -v runtimes/linux-x64/native/{debian9-,}librdkafka.so
 
+if which ldd ; then
+    ldd runtimes/linux-x64/native/librdkafka.so
+fi
+
+

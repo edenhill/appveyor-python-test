@@ -51,7 +51,7 @@ jobs:
         - CIBW_SKIP="cp27-* pp* *x86"
         - INCLUDE_DIRS="${PWD}/inst/build/native/include"
         - LIB_DIRS="${PWD}/inst/runtimes/osx-x64/native"
-        - CIBW_REPAIR_WHEEL_COMMAND="delocate-listdeps {wheel} && echo HI && delocate-wheel -v --require-archs x86_64 -w {dest_dir} {wheel}
+        - CIBW_REPAIR_WHEEL_COMMAND="delocate-listdeps {wheel} && echo HI && delocate-wheel -v --require-archs x86_64 -w {dest_dir} {wheel}"
       language: shell
       services: docker
       install:
