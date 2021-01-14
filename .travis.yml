@@ -40,6 +40,7 @@ jobs:
         - CIBW_BEFORE_BUILD="pwd ; ls"
         - CIBW_ENVIRONMENT="INCLUDE_DIRS=inst/build/native/include LIB_DIRS=inst/runtimes/linux-x64/native LD_LIBRARY_PATH=inst/runtimes/linux-x64/native"
         - CIBW_REPAIR_WHEEL_COMMAND="auditwheel show {wheel} ; auditwheel repair -w {dest_dir} {wheel}"
+        - CIBW_BUILD_VERBOSITY=3
       services: docker
       install:
        - python3 -m pip install cibuildwheel==1.7.4
@@ -53,6 +54,8 @@ jobs:
         - INCLUDE_DIRS="${PWD}/inst/build/native/include"
         - LIB_DIRS="${PWD}/inst/runtimes/osx-x64/native"
         - CIBW_REPAIR_WHEEL_COMMAND="delocate-listdeps {wheel} && echo now all && delocate-listdeps -a {wheel} && echo meh && delocate-listdeps -d {wheel} && delocate-wheel -v --require-archs x86_64 -w {dest_dir} {wheel}"
+        - CIBW_BEFORE_TEST="find ."
+        - CIBW_BUILD_VERBOSITY=3
       language: shell
       install:
        - python3 -m pip install cibuildwheel==1.7.4
