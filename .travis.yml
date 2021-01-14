@@ -29,13 +29,19 @@ jobs:
       script:
         - ./build.bat x64 win_amd64 wheelhouse
     - name: "Linux"
-      env: CIBW_SKIP="cp27-* pp*"
+      env:
+        - CIBW_SKIP="cp27-* pp* *x86"
+        - INCLUDE_DIRS="${PWD}/inst/build/native/include"
+        - LIB_DIRS="${PWD}/inst/runtimes/linux-x64/native"
       services: docker
       install: python3 -m pip install cibuildwheel==1.7.4
       script: python3 -m cibuildwheel --output-dir wheelhouse
     - name: "MacOSX"
       os: osx
-      env: CIBW_SKIP="cp27-* pp*"
+      env:
+        - CIBW_SKIP="cp27-* pp* *x86"
+        - INCLUDE_DIRS="${PWD}/inst/build/native/include"
+        - LIB_DIRS="${PWD}/inst/runtimes/osx-x64/native"
       language: shell
       services: docker
       install: python3 -m pip install cibuildwheel==1.7.4
@@ -47,6 +53,10 @@ jobs:
 #    # and a mac build
 #    - os: osx
 #      language: shell
+
+install:
+ - bash install-librdkafka.sh inst
+
 
 after_script:
   - dir wheelhouse

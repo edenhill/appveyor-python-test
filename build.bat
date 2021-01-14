@@ -22,10 +22,6 @@ set CIBW_REPAIR_WHEEL_COMMAND=python -m delvewheel repair --add-path %DLL_DIR% -
 
 set PATH=%PATH%;c:\Program Files\Git\bin\
 
-echo go3
-
-bash install-librdkafka.sh inst
-
 echo go4
 
 python -m pip install cibuildwheel==1.7.4
