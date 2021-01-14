@@ -1,9 +1,9 @@
 language: python
 
-global:
- env:
+env:
+ global:
   - LIBRDKAFKA_VERSION=v1.6.0-RC1
-  - CIBW_TEST_COMMAND="python {project}\test.py"
+  - CIBW_TEST_COMMAND="python {project}/test.py"
 
 jobs:
   # note: cibuildwheel does not support cp27-win* on Travis
@@ -50,6 +50,7 @@ jobs:
         - CIBW_SKIP="cp27-* pp* *x86"
         - INCLUDE_DIRS="${PWD}/inst/build/native/include"
         - LIB_DIRS="${PWD}/inst/runtimes/osx-x64/native"
+        - CIBW_REPAIR_WHEEL_COMMAND="delocate-listdeps {wheel} && echo HI && delocate-wheel -v --require-archs x86_64 -w {dest_dir} {wheel}
       language: shell
       services: docker
       install:
