@@ -9,6 +9,9 @@ if os.name == 'nt':
 else:
     libs.append('rdkafka')
 
+print("INCLUDE_DIRS IS: ", os.environ.get('INCLUDE_DIRS', 'NADA'))
+print("LIB_DIRS IS: ", os.environ.get('LIB_DIRS', 'FADA'))
+
 module1 = Extension('chello',
                     sources=['src/hellomodule.c'],
                     include_dirs=os.environ.get('INCLUDE_DIRS', '').split(','),
