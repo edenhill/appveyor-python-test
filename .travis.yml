@@ -2,7 +2,8 @@ language: python
 
 env:
  global:
-  - LIBRDKAFKA_VERSION=v1.6.0-RC1
+  # Note: nuget package version has no v-prefix
+  - LIBRDKAFKA_VERSION=1.6.0-RC1
   - CIBW_TEST_COMMAND="python {project}/test.py"
 
 jobs:
