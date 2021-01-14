@@ -37,7 +37,7 @@ jobs:
         - INCLUDE_DIRS="${PWD}/inst/build/native/include"
         - LIB_DIRS="${PWD}/inst/runtimes/linux-x64/native"
         - CIBW_BEFORE_BUILD="pwd ; ls"
-        - CIBW_ENVIRONMENT="INCLUDE_DIRS=inst/build/native/include LIB_DIRS=inst/runtimes/linux-x64/native"
+        - CIBW_ENVIRONMENT="INCLUDE_DIRS=inst/build/native/include LIB_DIRS=inst/runtimes/linux-x64/native LD_LIBRARY_PATH=inst/runtimes/linux-x64/native"
       services: docker
       install:
        - python3 -m pip install cibuildwheel==1.7.4
