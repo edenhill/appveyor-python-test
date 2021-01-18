@@ -44,7 +44,7 @@ jobs:
         - CIBW_BUILD_VERBOSITY=3
       services: docker
       install:
-       #- python3 -m pip install cibuildwheel==1.7.4
+       - python3 -m pip install cibuildwheel==1.7.4
        - bash install-librdkafka.sh inst
       before_script: find ${PWD}/inst
       script: python3 -m cibuildwheel --output-dir wheelhouse
@@ -55,7 +55,7 @@ jobs:
         - INCLUDE_DIRS="${PWD}/inst/build/native/include"
         - LIB_DIRS="${PWD}/inst/runtimes/osx-x64/native"
         - CIBW_REPAIR_WHEEL_COMMAND="delocate-listdeps {wheel} && echo now all && delocate-listdeps -a {wheel} && echo meh && delocate-listdeps -d {wheel} && delocate-wheel -v --require-archs x86_64 -w {dest_dir} {wheel}"
-        - CIBW_BEFORE_TEST="find ."
+        - CIBW_BEFORE_TEST="find . ; unzip -l {wheel}"
         - CIBW_BUILD_VERBOSITY=3
       language: shell
       install:
