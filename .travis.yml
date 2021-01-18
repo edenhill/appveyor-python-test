@@ -54,8 +54,8 @@ jobs:
         - CIBW_SKIP="cp27-* pp*"
         - INCLUDE_DIRS="${PWD}/inst/build/native/include"
         - LIB_DIRS="${PWD}/inst/runtimes/osx-x64/native"
-        - CIBW_REPAIR_WHEEL_COMMAND="delocate-listdeps {wheel} && echo now all && delocate-listdeps -a {wheel} && echo meh && delocate-listdeps -d {wheel} && delocate-wheel -v --require-archs x86_64 -w {dest_dir} {wheel}"
-        - CIBW_BEFORE_TEST="find . ; unzip -l {wheel}"
+        - CIBW_REPAIR_WHEEL_COMMAND="delocate-listdeps {wheel} && echo now all && delocate-listdeps -a {wheel} && echo meh && delocate-listdeps -d {wheel} && delocate-wheel -v --require-archs x86_64 -w {dest_dir} {wheel} ; unzip -l {dest_dir}/*.whl"
+        - CIBW_BEFORE_TEST="find ."
         - CIBW_BUILD_VERBOSITY=3
       language: shell
       install:
