@@ -17,7 +17,7 @@ curl -L -o lrk.zip https://www.nuget.org/api/v2/package/librdkafka.redist/${LIBR
 unzip lrk.zip
 
 # Copy the librdkafka build with least dependencies to librdkafka.so
-cp -v runtimes/linux-x64/native/{debian9-,}librdkafka.so
+cp -v runtimes/linux-x64/native/{centos6-,}librdkafka.so
 
 if which ldd ; then
     ldd runtimes/linux-x64/native/librdkafka.so

@@ -9,18 +9,6 @@ env:
 jobs:
   # note: cibuildwheel does not support cp27-win* on Travis
   include:
-    - name: "Windows x86"
-      os: windows
-      language: shell
-      before_install:
-        - choco install python --version 3.8.0
-        - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
-        # make sure it's on PATH as 'python3'
-        - ln -s /c/Python38/python.exe /c/Python38/python3.exe
-      install:
-        - bash install-librdkafka.sh inst
-      script:
-        - ./build.bat x86 win32 wheelhouse
     - name: "Windows x64"
       os: windows
       language: shell
@@ -33,24 +21,37 @@ jobs:
         - bash install-librdkafka.sh inst
       script:
         - ./build.bat x64 win_amd64 wheelhouse
-    - name: "Linux"
-      env: CIBW_SKIP="cp27-* pp* *x86"
+    - name: "Windows x86"
+      os: windows
+      language: shell
+      before_install:
+        - choco install python --version 3.8.0
+        - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+        # make sure it's on PATH as 'python3'
+        - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+      install:
+        - bash install-librdkafka.sh inst
+      script:
+        - ./build.bat x86 win32 wheelhouse
+    - name: "Linux x64"
+      env:
+        - CIBW_SKIP="pp* cp35-* *i686"
         - INCLUDE_DIRS="${PWD}/inst/build/native/include"
         - LIB_DIRS="${PWD}/inst/runtimes/linux-x64/native"
         - CIBW_BEFORE_BUILD="pwd ; ls"
-        - CIBW_ENVIRONMENT="INCLUDE_DIRS=inst/build/native/include LIB_DIRS=inst/runtimes/linux-x64/native LD_LIBRARY_PATH=inst/runtimes/linux-x64/native"
-        - CIBW_REPAIR_WHEEL_COMMAND="auditwheel show {wheel} ; auditwheel repair -w {dest_dir} {wheel}"
+        - CIBW_ENVIRONMENT="INCLUDE_DIRS=inst/build/native/include LIB_DIRS=inst/runtimes/linux-x64/native"
+        - CIBW_REPAIR_WHEEL_COMMAND="cp -v inst/runtimes/linux-x64/native/librdkafka.so /usr/lib64/librdkafka.so.1 && auditwheel show {wheel} && auditwheel repair -w {dest_dir} {wheel}"
         - CIBW_BUILD_VERBOSITY=3
       services: docker
       install:
-       - python3 -m pip install cibuildwheel==1.7.4
+       #- python3 -m pip install cibuildwheel==1.7.4
        - bash install-librdkafka.sh inst
       before_script: find ${PWD}/inst
       script: python3 -m cibuildwheel --output-dir wheelhouse
-    - name: "MacOSX"
+    - name: "MacOSX x64"
       os: osx
       env:
-        - CIBW_SKIP="cp27-* pp* *x86"
+        - CIBW_SKIP="cp27-* pp*"
         - INCLUDE_DIRS="${PWD}/inst/build/native/include"
         - LIB_DIRS="${PWD}/inst/runtimes/osx-x64/native"
         - CIBW_REPAIR_WHEEL_COMMAND="delocate-listdeps {wheel} && echo now all && delocate-listdeps -a {wheel} && echo meh && delocate-listdeps -d {wheel} && delocate-wheel -v --require-archs x86_64 -w {dest_dir} {wheel}"
