@@ -51,12 +51,9 @@ jobs:
     - name: "MacOSX x64"
       os: osx
       env:
-#        - CIBW_BUILD="cp38-*"
-        - CIBW_SKIP="cp27-* pp*"
+        - CIBW_SKIP="pp* cp35-*"
         - INCLUDE_DIRS="${PWD}/inst/build/native/include"
         - LIB_DIRS="${PWD}/inst/runtimes/osx-x64/native"
-        - xCIBW_REPAIR_WHEEL_COMMAND="echo delocate {wheel} ; cp -v {wheel} {dest_dir}"
-        - xCIBW_REPAIR_WHEEL_COMMAND="delocate-listdeps {wheel} && echo now all && delocate-listdeps -a {wheel} && echo meh && delocate-listdeps -d {wheel} && delocate-wheel -v --require-archs x86_64 -w {dest_dir} {wheel} ; unzip -l {dest_dir}/*.whl"
         - CIBW_BEFORE_TEST="find ."
         - CIBW_BUILD_VERBOSITY=3
       language: shell
