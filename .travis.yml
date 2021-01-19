@@ -4,7 +4,6 @@ env:
  global:
   # Note: nuget package version has no v-prefix
   - LIBRDKAFKA_VERSION=1.6.0-RC2
-  - xCIBW_TEST_COMMAND="python {project}/test.py"
 
 jobs:
   # note: cibuildwheel does not support cp27-win* on Travis
@@ -33,22 +32,6 @@ jobs:
         - bash install-librdkafka.sh $LIBRDKAFKA_VERSION dest
       script:
         - ./build-wheels.bat x86 win32 dest wheelhouse
-    - name: "Linux x64 old"
-      if: false = 3
-      env:
-        - CIBW_SKIP="pp* cp35-* *i686"
-        - INCLUDE_DIRS="${PWD}/inst/build/native/include"
-        - LIB_DIRS="${PWD}/inst/runtimes/linux-x64/native"
-        - CIBW_BEFORE_BUILD="pwd ; ls"
-        - CIBW_ENVIRONMENT="INCLUDE_DIRS=inst/build/native/include LIB_DIRS=inst/runtimes/linux-x64/native"
-        - CIBW_REPAIR_WHEEL_COMMAND="cp -v inst/runtimes/linux-x64/native/librdkafka.so /usr/lib64/librdkafka.so.1 && auditwheel show {wheel} && auditwheel repair -w {dest_dir} {wheel}"
-        - CIBW_BUILD_VERBOSITY=3
-      services: docker
-      install:
-       - python3 -m pip install cibuildwheel==1.7.4
-       - bash install-librdkafka.sh inst
-      before_script: find ${PWD}/inst
-      script: python3 -m cibuildwheel --output-dir wheelhouse
     - name: "Linux x64"
       services: docker
       script: ./build-wheels.sh $LIBRDKAFKA_VERSION wheelhouse
@@ -56,28 +39,6 @@ jobs:
       os: osx
       language: shell
       script: ./build-wheels.sh $LIBRDKAFKA_VERSION wheelhouse
-    - name: "MacOSX x64 old"
-      if: false = 5
-      os: osx
-      env:
-        - CIBW_SKIP="pp* cp35-*"
-        - INCLUDE_DIRS="${PWD}/inst/build/native/include"
-        - LIB_DIRS="${PWD}/inst/runtimes/osx-x64/native"
-        - CIBW_BEFORE_TEST="find ."
-        - CIBW_BUILD_VERBOSITY=3
-      language: shell
-      install:
-       - python3 -m pip install cibuildwheel==1.7.4
-       - bash install-librdkafka.sh inst
-      script: python3 -m cibuildwheel --output-dir wheelhouse
-
-
-#    # perform a linux build
-#    - services: docker
-#    # and a mac build
-#    - os: osx
-#      language: shell
-
 
 after_script:
   - ls wheelhouse
