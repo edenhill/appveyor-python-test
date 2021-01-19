@@ -27,13 +27,17 @@ osname=$(uname -s)
 case $osname in
     Linux)
         os=linux
-        # Needed by setup.py to find librdkafka
+        # Need to set up env vars (in docker) so that setup.py
+        # finds librdkafka.
         lib_dir=dest/runtimes/linux-x64/native
         export CIBW_ENVIRONMENT="INCLUDE_DIRS=dest/build/native/include LIB_DIRS=$lib_dir LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:\$PWD/$lib_dir"
         ;;
     Darwin)
         os=macos
+        # Need to set up env vars so that setup.py finds librdkafka.
         lib_dir=dest/runtimes/osx-x64/native
+        export INCLUDE_DIRS="${PWD}/dest/build/native/include"
+        export LIB_DIRS="${PWD}/$lib_dir"
         ;;
     *)
         echo "$0: May only be used on Linux or OSX"
