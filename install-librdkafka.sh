@@ -29,7 +29,7 @@ elif which otool ; then
 
     # Change the library's self-referencing name from
     # /Users/travis/.....somelocation/librdkafka.1.dylib to its local path.
-    install_name_tool -id librdkafka.dylib $PWD/runtimes/osx-x64/native/librdkafka.dylib
+    install_name_tool -id $PWD/runtimes/osx-x64/native/librdkafka.dylib runtimes/osx-x64/native/librdkafka.dylib
 
     otool -L runtimes/osx-x64/native/librdkafka.dylib
 fi
