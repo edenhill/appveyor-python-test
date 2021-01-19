@@ -50,10 +50,14 @@ jobs:
       before_script: find ${PWD}/inst
       script: python3 -m cibuildwheel --output-dir wheelhouse
     - name: "Linux x64"
-      env:
       services: docker
       script: ./build-wheels.sh $LIBRDKAFKA_VERSION wheelhouse
     - name: "MacOSX x64"
+      os: osx
+      language: shell
+      script: ./build-wheels.sh $LIBRDKAFKA_VERSION wheelhouse
+    - name: "MacOSX x64 old"
+      if: false = 5
       os: osx
       env:
         - CIBW_SKIP="pp* cp35-*"
