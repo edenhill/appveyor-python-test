@@ -2,27 +2,34 @@
 
 set -ex
 
-DEST="$1"
+VER="$1"
+DEST="$2"
+
+if [[ -z $DEST ]]; then
+    echo "Usage: $0 <librdkafka-redist-version> <destdir>"
+    exit 1
+fi
 
 if [[ -f $DEST/build/native/include/librdkafka/rdkafka.h ]]; then
-    echo "Already installed in $DEST"
+    echo "$0: librdkafka already installed in $DEST"
     exit 0
 fi
 
-mkdir -p "$DEST"
-cd "$DEST"
+echo "$0: Installing lbirdkafka $VER to $DEST"
+[[ -d "$DEST" ]] || mkdir -p "$DEST"
+pushd "$DEST"
 
-curl -L -o lrk.zip https://www.nuget.org/api/v2/package/librdkafka.redist/${LIBRDKAFKA_VERSION}
+curl -L -o lrk$VER.zip https://www.nuget.org/api/v2/package/librdkafka.redist/$VER
 
-unzip lrk.zip
+unzip lrk$VER.zip
 
 
 if which ldd ; then
     # Linux
 
-    # Copy the librdkafka build with least dependencies to librdkafka.so
-    cp -v runtimes/linux-x64/native/{centos6-,}librdkafka.so
-    ldd runtimes/linux-x64/native/librdkafka.so
+    # Copy the librdkafka build with least dependencies to librdkafka.so.1
+    cp -v runtimes/linux-x64/native/{centos6-librdkafka.so,librdkafka.so.1}
+    ldd runtimes/linux-x64/native/librdkafka.so.1
 
 elif which otool ; then
     # MacOS X
@@ -35,3 +42,4 @@ elif which otool ; then
 fi
 
 
+popd

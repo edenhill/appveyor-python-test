@@ -18,9 +18,9 @@ jobs:
         # make sure it's on PATH as 'python3'
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
       install:
-        - bash install-librdkafka.sh inst
+        - bash install-librdkafka.sh $LIBRDKAFKA_VERSION dest
       script:
-        - ./build.bat x64 win_amd64 wheelhouse
+        - ./build-wheels.bat x64 win_amd64 dest wheelhouse
     - name: "Windows x86"
       os: windows
       language: shell
@@ -30,9 +30,9 @@ jobs:
         # make sure it's on PATH as 'python3'
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
       install:
-        - bash install-librdkafka.sh inst
+        - bash install-librdkafka.sh $LIBRDKAFKA_VERSION dest
       script:
-        - ./build.bat x86 win32 wheelhouse
+        - ./build-wheels.bat x86 win32 dest wheelhouse
     - name: "Linux x64 old"
       if: false = 3
       env:

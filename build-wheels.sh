@@ -23,16 +23,15 @@ set -ex
 [[ -d $wheeldir ]] || mkdir -p "$wheeldir"
 
 
-osname=$(uname -s)
-case $osname in
-    Linux)
+case $OSTYPE in
+    linux*)
         os=linux
         # Need to set up env vars (in docker) so that setup.py
         # finds librdkafka.
         lib_dir=dest/runtimes/linux-x64/native
         export CIBW_ENVIRONMENT="INCLUDE_DIRS=dest/build/native/include LIB_DIRS=$lib_dir LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:\$PWD/$lib_dir"
         ;;
-    Darwin)
+    darwin*)
         os=macos
         # Need to set up env vars so that setup.py finds librdkafka.
         lib_dir=dest/runtimes/osx-x64/native
@@ -40,53 +39,13 @@ case $osname in
         export LIB_DIRS="${PWD}/$lib_dir"
         ;;
     *)
-        echo "$0: May only be used on Linux or OSX"
+        echo "$0: Unsupported OSTYPE $OSTYPE"
         exit 1
         ;;
 esac
 
 
-
-function install_librdkafka {
-    local ver=$1
-    local dest=$2   # dest directory
-
-    set -ex
-
-    if [[ -f $dest/build/native/include/librdkafka/rdkafka.h ]]; then
-        echo "$0: librdkafka already installed in $dest"
-        return
-    fi
-
-    mkdir -p "$dest"
-    pushd "$dest"
-
-    echo "Installing librdkafka $ver to $dest"
-    curl -L -o lrk.zip https://www.nuget.org/api/v2/package/librdkafka.redist/${ver}
-
-    unzip lrk.zip
-
-    if [[ $os == linux ]]; then
-        # Copy the librdkafka build with least dependencies to librdkafka.so
-        cp -v runtimes/linux-x64/native/{centos6-,}librdkafka.so
-        ldd runtimes/linux-x64/native/librdkafka.so
-
-    elif [[ $os == macos ]]; then
-        # MacOS X
-
-        # Change the library's self-referencing name from
-        # /Users/travis/.....somelocation/librdkafka.1.dylib to its local path.
-        install_name_tool -id $PWD/runtimes/osx-x64/native/librdkafka.dylib runtimes/osx-x64/native/librdkafka.dylib
-
-        otool -L runtimes/osx-x64/native/librdkafka.dylib
-    fi
-
-    popd
-}
-
-
-
-install_librdkafka $librdkafka_version dest
+./install-librdkafka.sh $librdkafka_version dest
 
 python3 -m pip install cibuildwheel==1.7.4
 
