@@ -42,7 +42,8 @@ for ji in doc.get('jobs', dict()).get('include', list()):
         continue
 
     envs = doc.get('env', dict()).get('global', list()) + ji.get('env', list())
-    env_dict = {'TRAVIS': 'True', 'PWD': os.getcwd()}
+    env_dict = os.environ.copy()
+    env_dict.update({'TRAVIS': 'True', 'PWD': os.getcwd()})
     print(envs)
     for x in envs:
         ei = x.index('=')
@@ -63,7 +64,7 @@ for ji in doc.get('jobs', dict()).get('include', list()):
     run_cmd('before_install', before_install, env=env_dict)
     run_cmd('install', install, env=env_dict)
     run_cmd('script', script, env=env_dict)
-    run_cmd('after_script', script, env=env_dict)
+    run_cmd('after_script', after_script, env=env_dict)
 
     sys.exit(0)
 

@@ -1,4 +1,4 @@
-import chello
+from . import chello
 
 class Hello(object):
 	@classmethod

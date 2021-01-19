@@ -43,7 +43,7 @@ initchello(void)
 #if PY_MAJOR_VERSION >= 3
   static struct PyModuleDef moduledef = {
         PyModuleDef_HEAD_INIT,
-        "chello",     /* m_name */
+        "hello.chello",     /* m_name */
         "This is a Py3 module",  /* m_doc */
         -1,                  /* m_size */
         HelloMethods,    /* m_methods */
@@ -54,6 +54,6 @@ initchello(void)
     };
   return PyModule_Create(&moduledef);
 #else
-  Py_InitModule3("chello", HelloMethods, "This is a Py2 module");
+  Py_InitModule3("hello.chello", HelloMethods, "This is a Py2 module");
 #endif
 }
